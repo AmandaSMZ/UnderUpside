@@ -15,7 +15,7 @@ var is_gravity_inverted = false
 
 func _physics_process(delta: float) -> void:
 	var input_axis = Input.get_axis("mover_izquierda","mover_derecha")
-	orientation()
+	set_orientation()
 	apply_gravity(delta)
 	handle_acceleration(input_axis, delta)
 	apply_friction(input_axis, delta)
@@ -26,16 +26,17 @@ func _physics_process(delta: float) -> void:
 	end_game()
 	
 	
-func orientation():
-	if global_position.y > 200 and not is_gravity_inverted:
+func set_orientation():
+	if global_position.y > 0 and not is_gravity_inverted:
 		is_gravity_inverted = true  # Invertimos la gravedad
-	elif global_position.y <= 200 and is_gravity_inverted:
+	elif global_position.y <= 0 and is_gravity_inverted:
 		is_gravity_inverted = false  # Restauramos la gravedad normal
+		
 # Add the gravity.
 func apply_gravity(delta):
 	#if not is_on_floor():
 	#	velocity+=get_gravity() * delta * gravity_scale
-	if not is_on_floor():
+	if not is_resting():
 		var gravity_direction = 1
 		# Si la gravedad está invertida, invertimos la dirección de la gravedad
 		if is_gravity_inverted:
@@ -52,20 +53,21 @@ func is_resting():
 		return false
 
 func handle_acceleration(input_axis, delta):
-	if not is_on_floor(): return
+	if not is_resting(): return
 	if input_axis != 0:
 		velocity.x = move_toward(velocity.x, speed*input_axis, acceleration*delta)
 		
 func apply_friction(input_axis, delta):
-	if input_axis==0 and (is_on_floor() or is_on_ceiling()):
+	if input_axis==0 and is_resting():
 		velocity.x = move_toward(velocity.x, 0, friction*delta)
 		
 func handle_jump():
 	if Input.is_action_pressed("saltar"):
-		if is_on_floor() and not is_gravity_inverted:
-			velocity.y = jump_force
-		elif is_on_ceiling() and is_gravity_inverted:
-			velocity.y = -jump_force
+		if is_resting():
+			if not is_gravity_inverted:
+				velocity.y = jump_force
+			else:
+				velocity.y = -jump_force
 		
 			
 func handle_air_acceleration(input_axis, delta):
@@ -79,7 +81,7 @@ func update_animation(input_axis):
 		ani_player.speed_scale = velocity.length()/100
 		ani_player.flip_h = (input_axis<0)
 		ani_player.play("run")
-	elif not is_on_floor():
+	elif not is_resting():
 		ani_player.play("jump")
 	else:
 		ani_player.speed_scale=1

@@ -6,6 +6,8 @@
 [ext_resource type="FontFile" uid="uid://3bmkxxah752j" path="res://menu/Stranger Things.ttf" id="4_xw60o"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wcbbc"]
+font = ExtResource("4_xw60o")
+font_size = 50
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -34,7 +36,7 @@ offset_top = 64.0
 offset_right = 204.0
 offset_bottom = 112.0
 theme_override_fonts/font = ExtResource("4_xw60o")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 56
 text = "Under
 Upside"
 label_settings = SubResource("LabelSettings_wcbbc")
