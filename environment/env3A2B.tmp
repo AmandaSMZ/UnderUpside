@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://catq5joeo2oyk"]
+
+[ext_resource type="Texture2D" uid="uid://bsdw1lffn0au3" path="res://environment/img/fondo.jpg" id="1_fyb5x"]
+[ext_resource type="PackedScene" uid="uid://b023wlc81h6ro" path="res://environment/floor.tscn" id="1_liamx"]
+[ext_resource type="PackedScene" uid="uid://cpfhcd1a3ivi2" path="res://player/jugadora.tscn" id="2_3v6w5"]
+
+[node name="Environment" type="Node2D"]
+
+[node name="fondo_mundo_real" type="Sprite2D" parent="."]
+position = Vector2(1120, -32)
+scale = Vector2(1.5442, 1.28874)
+texture = ExtResource("1_fyb5x")
+
+[node name="Floor" parent="." instance=ExtResource("1_liamx")]
+
+[node name="Jugadora" parent="." instance=ExtResource("2_3v6w5")]
+position = Vector2(72, -136)

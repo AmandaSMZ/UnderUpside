@@ -1,0 +1,81 @@
+[gd_scene load_steps=7 format=3 uid="uid://dw31bwxqm00m1"]
+
+[ext_resource type="Script" path="res://ene_din/enemigo.gd" id="1_vqriw"]
+[ext_resource type="Texture2D" uid="uid://dfxmo2vwahhny" path="res://ene_din/img/demogorgon.png" id="2_d76wj"]
+[ext_resource type="AudioStream" uid="uid://bigki3m1n225v" path="res://ene_din/sound/sonido_ataque.mp3" id="3_0waf6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_655ge"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_d76wj")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_d76wj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_d76wj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_d76wj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pf746"]
+radius = 6.4e+06
+height = 2.56e+07
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hpo4c"]
+radius = 128.0
+height = 256.0
+
+[node name="enem_demogorgon" type="CharacterBody2D"]
+position = Vector2(32, 96)
+scale = Vector2(0.4, 0.4)
+script = ExtResource("1_vqriw")
+metadata/_edit_group_ = true
+
+[node name="ani_demogorgon" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_655ge")
+frame_progress = 0.923315
+
+[node name="col_demogorgon" type="CollisionShape2D" parent="."]
+scale = Vector2(1e-05, 1e-05)
+shape = SubResource("CapsuleShape2D_pf746")
+
+[node name="enem_area" type="Area2D" parent="."]
+position = Vector2(32, 32)
+
+[node name="col_demogorgon_ataque" type="CollisionShape2D" parent="enem_area"]
+position = Vector2(-32, -32)
+shape = SubResource("CapsuleShape2D_hpo4c")
+
+[node name="audio_ataque" type="AudioStreamPlayer2D" parent="enem_area"]
+stream = ExtResource("3_0waf6")
+
+[node name="detect_suelo_izquierda" type="RayCast2D" parent="."]
+position = Vector2(-100, 0)
+skew = -0.221657
+target_position = Vector2(-96.0576, 164.013)
+
+[node name="detect_suelo_derecha" type="RayCast2D" parent="."]
+position = Vector2(100, 0)
+skew = 0.221657
+target_position = Vector2(96.0576, 164.013)
+
+[node name="detect_techo_derecha" type="RayCast2D" parent="."]
+position = Vector2(64, 0)
+scale = Vector2(1, 1)
+target_position = Vector2(96, -160)
+
+[node name="detect_techo_izquierda" type="RayCast2D" parent="."]
+position = Vector2(-64, 0)
+target_position = Vector2(-96, -160)
+
+[connection signal="body_entered" from="enem_area" to="." method="_on_enem_area_body_entered"]

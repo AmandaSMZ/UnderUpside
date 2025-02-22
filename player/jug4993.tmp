@@ -1,30 +1,13 @@
-[gd_scene load_steps=26 format=3 uid="uid://cpfhcd1a3ivi2"]
+[gd_scene load_steps=21 format=3 uid="uid://cpfhcd1a3ivi2"]
 
 [ext_resource type="Texture2D" uid="uid://dofvu0a7licc7" path="res://player/img/niña.png" id="1_j6h2l"]
 [ext_resource type="Script" path="res://player/jugadora.gd" id="1_qyfu7"]
 [ext_resource type="PackedScene" uid="uid://d36txwwd8ykjl" path="res://contador_gorras/Contador.tscn" id="3_xe003"]
 [ext_resource type="PackedScene" uid="uid://ch3oe2dsyyf78" path="res://contador_vidas/Contador_vidas.tscn" id="4_s8b40"]
-[ext_resource type="AudioStream" uid="uid://w4de14xctx2k" path="res://game_over/music/game-over-31-179699.mp3" id="5_7kpgr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bp2kw"]
 radius = 33.5
 height = 107.0
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ccu6a"]
-atlas = ExtResource("1_j6h2l")
-region = Rect2(273, 296, 85, 105)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4bu3s"]
-atlas = ExtResource("1_j6h2l")
-region = Rect2(361, 324, 87, 82)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_th6nn"]
-atlas = ExtResource("1_j6h2l")
-region = Rect2(252, 27, 67, 102)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_scb2x"]
-atlas = ExtResource("1_j6h2l")
-region = Rect2(333, 30, 92, 97)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lb5nj"]
 atlas = ExtResource("1_j6h2l")
@@ -86,34 +69,6 @@ region = Rect2(382, 164, 74, 106)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ccu6a")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4bu3s")
-}],
-"loop": false,
-"name": &"die",
-"speed": 2.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_th6nn")
-}, {
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.4,
-"texture": SubResource("AtlasTexture_scb2x")
-}, {
-"duration": 1.0,
-"texture": null
-}],
-"loop": false,
-"name": &"golpe",
-"speed": 4.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_lb5nj")
 }, {
 "duration": 1.0,
@@ -171,7 +126,7 @@ animations = [{
 }]
 
 [node name="Jugadora" type="CharacterBody2D"]
-position = Vector2(224, -32)
+position = Vector2(32, -32)
 script = ExtResource("1_qyfu7")
 metadata/_edit_group_ = true
 
@@ -181,7 +136,9 @@ shape = SubResource("CapsuleShape2D_bp2kw")
 
 [node name="ani_jugadora" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3j4t3")
-animation = &"run"
+animation = &"jump"
+frame = 1
+frame_progress = 0.125919
 
 [node name="cam_jugadora" type="Camera2D" parent="."]
 zoom = Vector2(0.75, 0.75)
@@ -196,25 +153,11 @@ limit_smoothed = true
 [node name="nd_contador_gorras" parent="Cnv_contador_gorras" instance=ExtResource("3_xe003")]
 offset_left = 96.0
 offset_top = 32.0
-scale = Vector2(0.7, 0.7)
 
 [node name="Cnv_contador_vidas" type="CanvasLayer" parent="."]
-scale = Vector2(0.6, 0.6)
-transform = Transform2D(0.6, 0, 0, 0.6, 0, 0)
 
 [node name="ContadorVidas" parent="Cnv_contador_vidas" instance=ExtResource("4_s8b40")]
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1653.33
-offset_top = 53.3333
-offset_right = 501.333
-offset_bottom = -594.667
-grow_horizontal = 2
-
-[node name="tiempo" type="Timer" parent="."]
-wait_time = 3.0
-one_shot = true
-
-[node name="audio_die" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_7kpgr")
+offset_left = 1312.0
+offset_top = 32.0
+offset_right = 1312.0
+offset_bottom = 32.0

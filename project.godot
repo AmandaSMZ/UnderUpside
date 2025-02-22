@@ -15,6 +15,10 @@ run/main_scene="res://menu/menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+ReproductorMusica="*res://musica_fondo/ReproductorMusica.tscn"
+
 [input]
 
 mover_izquierda={

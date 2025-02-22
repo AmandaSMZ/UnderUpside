@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbtstc44nvung"]
+
+[ext_resource type="Script" path="res://musica_fondo/music_manager.gd" id="1_ioqoq"]
+[ext_resource type="AudioStream" uid="uid://but7mf8towht6" path="res://musica_fondo/music/stranger-things.mp3" id="2_2klom"]
+
+[node name="MusicManager" type="Node2D"]
+script = ExtResource("1_ioqoq")
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_2klom")

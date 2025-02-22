@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcyn0krulhlau"]
+
+[ext_resource type="Texture2D" uid="uid://bsha8tbyhev6e" path="res://game_over/img/demogorgon.jpg" id="1_gbs8i"]
+[ext_resource type="FontFile" uid="uid://3bmkxxah752j" path="res://menu/Stranger Things.ttf" id="2_nmhyl"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fm56w"]
+font = ExtResource("2_nmhyl")
+font_size = 54
+font_color = Color(0.686275, 0, 0.00784314, 1)
+
+[node name="CtrlGameOver" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+metadata/_edit_group_ = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 96.0
+offset_right = 960.0
+offset_bottom = 512.0
+texture = ExtResource("1_gbs8i")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 416.0
+offset_top = 416.0
+offset_right = 888.0
+offset_bottom = 497.0
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_fm56w")

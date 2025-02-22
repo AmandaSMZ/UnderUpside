@@ -2,15 +2,24 @@ extends CharacterBody2D
 
 @export var gravity_scale = 2
 @export var speed = 500
-@export var acceleration = 600
+@export var acceleration = 6000
 @export var friction = 1500
-@export var jump_force = -700
+@export var jump_force = -900
 @export var air_acceleration = 2000
 
 @onready var ani_player =$ani_jugadora
+@onready var contador: Control = $Cnv_contador_gorras/nd_contador_gorras
+@onready var control_vidas: Node = $Cnv_contador_vidas/ContadorVidas
 
 var is_gravity_inverted = false
+var gorras: int = 0
+var vidas: int = 3
+var muerto = false
 
+func _ready() -> void:
+	add_to_group("jugadores")
+	contador.actualizar(0)
+	ReproductorMusica.play_music()
 
 
 func _physics_process(delta: float) -> void:
@@ -23,39 +32,37 @@ func _physics_process(delta: float) -> void:
 	handle_air_acceleration(input_axis, delta)
 	update_animation(input_axis)
 	move_and_slide()
-	end_game()
+	
 	
 	
 func set_orientation():
-	if global_position.y > 0 and not is_gravity_inverted:
-		is_gravity_inverted = true  # Invertimos la gravedad
-	elif global_position.y <= 0 and is_gravity_inverted:
-		is_gravity_inverted = false  # Restauramos la gravedad normal
+	if global_position.y > 32:
+		is_gravity_inverted = true 
+	elif global_position.y <= 32:
+		is_gravity_inverted = false
 		
 # Add the gravity.
 func apply_gravity(delta):
-	#if not is_on_floor():
-	#	velocity+=get_gravity() * delta * gravity_scale
 	if not is_resting():
 		var gravity_direction = 1
-		# Si la gravedad está invertida, invertimos la dirección de la gravedad
 		if is_gravity_inverted:
-			gravity_direction = -1  # Invertimos la gravedad hacia arriba
-		var gravity = 980
-		velocity += Vector2(0, gravity_direction * gravity) * delta * gravity_scale
+			gravity_direction = -1  # Cambia el sentido de la gravedad
+		velocity += gravity_direction * get_gravity() * delta * gravity_scale
 
 func is_resting():
-	if is_on_floor() and not is_gravity_inverted:
-		return true
-	elif is_on_ceiling() and is_gravity_inverted:
-		return true
+	if not is_gravity_inverted:
+		return is_on_floor()
 	else:
-		return false
+		return is_on_ceiling()
 
 func handle_acceleration(input_axis, delta):
-	if not is_resting(): return
-	if input_axis != 0:
-		velocity.x = move_toward(velocity.x, speed*input_axis, acceleration*delta)
+	if is_resting():
+		if input_axis != 0:
+			velocity.x = move_toward(velocity.x, speed*input_axis, acceleration*delta)
+			if is_gravity_inverted and input_axis < 0:
+				velocity.x -= 100
+			#print("Tocando:", is_resting(), " | velocity.x:", velocity.x)
+			#print(speed," input", input_axis,"acel", acceleration,"del ", delta)
 		
 func apply_friction(input_axis, delta):
 	if input_axis==0 and is_resting():
@@ -71,13 +78,12 @@ func handle_jump():
 		
 			
 func handle_air_acceleration(input_axis, delta):
-	if is_on_floor() or is_on_ceiling(): return
-	if input_axis != 0:
-		velocity.x = move_toward(velocity.x, speed*input_axis, air_acceleration *delta)
+	if not is_resting():
+		if input_axis != 0:
+			velocity.x = move_toward(velocity.x, speed*input_axis, air_acceleration *delta)
 		
 func update_animation(input_axis):
 	if input_axis !=0:
-		# velocidad de la animación será dependiente de la velocidad
 		ani_player.speed_scale = velocity.length()/100
 		ani_player.flip_h = (input_axis<0)
 		ani_player.play("run")
@@ -87,16 +93,31 @@ func update_animation(input_axis):
 		ani_player.speed_scale=1
 		ani_player.play("idle")
 		
-	# Verificamos si la gravedad está invertida y volteamos el personaje
 	if is_gravity_inverted:
-		ani_player.flip_v = true  # Volteamos el personaje verticalmente para simular el "upside down"
+		ani_player.flip_v = true
 	else:
-		ani_player.flip_v = false  # Aseguramos que no esté volteado si la gravedad no está invertida
+		ani_player.flip_v = false 
 		
-func end_game():
-	if global_position.y > 800:
-		call_deferred("reload_scene")
+func add_gorra():
+		gorras += 1
+		contador.actualizar(gorras)
 		
+func perder_vida():
+	ani_player.play("golpe")
+	vidas -=1
+	control_vidas.actualizar_vidas()
+	if vidas == 0:
+		morir()
 		
-func reload_scene():
-	get_tree().reload_current_scene()
+	
+func morir():
+	muerto = true
+	set_physics_process(false)
+	$ani_jugadora.play("die")
+	ReproductorMusica.musica_fondo.stop()
+	$audio_die.play()
+	$tiempo.start()
+	print("⏳ Timer iniciado... esperando 3 segundos")
+	await $tiempo.timeout
+	print("✅ Timer terminado, cambiando de escena...")
+	get_tree().change_scene_to_file("res://menu/menu.tscn")

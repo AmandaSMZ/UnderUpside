@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://ch3oe2dsyyf78"]
+
+[ext_resource type="Script" path="res://contador_vidas/contador_vidas.gd" id="1_872nl"]
+[ext_resource type="Texture2D" uid="uid://bgd8fian7lt3m" path="res://contador_vidas/img/niña - copia.png" id="1_yfcv8"]
+
+[node name="ContadorVidas" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_872nl")
+
+[node name="hbox_vidas" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="spr_vida1" type="Sprite2D" parent="hbox_vidas"]
+position = Vector2(32, 32)
+texture = ExtResource("1_yfcv8")
+
+[node name="spr_vida2" type="Sprite2D" parent="hbox_vidas"]
+position = Vector2(96, 32)
+texture = ExtResource("1_yfcv8")
+
+[node name="spr_vida3" type="Sprite2D" parent="hbox_vidas"]
+position = Vector2(160, 32)
+texture = ExtResource("1_yfcv8")

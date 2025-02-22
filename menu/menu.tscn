@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://duga8wvv4wst4"]
 
 [ext_resource type="Script" path="res://menu/menu.gd" id="1_0hguv"]
-[ext_resource type="AudioStream" uid="uid://but7mf8towht6" path="res://menu/stranger-things.mp3" id="1_26j2e"]
+[ext_resource type="AudioStream" uid="uid://but7mf8towht6" path="res://musica_fondo/music/stranger-things.mp3" id="1_26j2e"]
 [ext_resource type="Texture2D" uid="uid://d0txp6o54t7xu" path="res://menu/fondo_st.jpg" id="2_do400"]
 [ext_resource type="FontFile" uid="uid://3bmkxxah752j" path="res://menu/Stranger Things.ttf" id="4_xw60o"]
 
@@ -20,7 +20,6 @@ script = ExtResource("1_0hguv")
 
 [node name="audio_menu" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("1_26j2e")
-autoplay = true
 parameters/looping = false
 
 [node name="sprite_menu" type="Sprite2D" parent="."]
@@ -35,7 +34,6 @@ offset_left = 104.0
 offset_top = 64.0
 offset_right = 204.0
 offset_bottom = 112.0
-theme_override_fonts/font = ExtResource("4_xw60o")
 theme_override_font_sizes/font_size = 56
 text = "Under
 Upside"

@@ -10,3 +10,7 @@ func _on_btn_start_pressed():
 
 func _on_btn_end_pressed():
 	get_tree().quit()
+
+func _ready():
+	# La música de fondo se reproduce de manera global
+	ReproductorMusica.play_music()

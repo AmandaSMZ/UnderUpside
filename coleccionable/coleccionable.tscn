@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://dp26snqnyp0lx"]
+
+[ext_resource type="Script" path="res://coleccionable/coleccionable.gd" id="1_38pk5"]
+[ext_resource type="Texture2D" uid="uid://dtxl6pa5pfc1n" path="res://coleccionable/img/gorra1.png" id="2_0ty8x"]
+[ext_resource type="Texture2D" uid="uid://bgxu4oq6gfd2b" path="res://coleccionable/img/gorra2.png" id="3_afr3o"]
+[ext_resource type="Texture2D" uid="uid://lp8kfi5uwgh6" path="res://coleccionable/img/gorra3.png" id="4_42w74"]
+[ext_resource type="Texture2D" uid="uid://cpd0iyutbv8vb" path="res://coleccionable/img/gorra4.png" id="5_vukem"]
+[ext_resource type="AudioStream" uid="uid://ct0xmwbmwxyd" path="res://coleccionable/sound/collectcoin-6075.mp3" id="6_jxu2a"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xgsgo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_0ty8x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_afr3o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_42w74")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_vukem")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_noxml"]
+radius = 64.0
+
+[node name="Coleccionable" type="Area2D"]
+position = Vector2(32, -32)
+script = ExtResource("1_38pk5")
+metadata/_edit_group_ = true
+
+[node name="ani_gorra" type="AnimatedSprite2D" parent="."]
+position = Vector2(-32, 32)
+scale = Vector2(0.3675, 0.5)
+sprite_frames = SubResource("SpriteFrames_xgsgo")
+
+[node name="col_gorra" type="CollisionShape2D" parent="."]
+position = Vector2(-32, 32)
+scale = Vector2(0.4, 0.4)
+shape = SubResource("CircleShape2D_noxml")
+
+[node name="audio_gorra" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_jxu2a")
+volume_db = 24.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
