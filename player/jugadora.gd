@@ -103,11 +103,13 @@ func add_gorra():
 		contador.actualizar(gorras)
 		
 func perder_vida():
-	ani_player.play("golpe")
 	vidas -=1
 	control_vidas.actualizar_vidas()
 	if vidas == 0:
 		morir()
+	else:
+		$audio_golpe.play()
+		
 		
 	
 func morir():
@@ -117,7 +119,5 @@ func morir():
 	ReproductorMusica.musica_fondo.stop()
 	$audio_die.play()
 	$tiempo.start()
-	print("⏳ Timer iniciado... esperando 3 segundos")
 	await $tiempo.timeout
-	print("✅ Timer terminado, cambiando de escena...")
 	get_tree().change_scene_to_file("res://menu/menu.tscn")

@@ -1,10 +1,11 @@
-[gd_scene load_steps=26 format=3 uid="uid://cpfhcd1a3ivi2"]
+[gd_scene load_steps=27 format=3 uid="uid://cpfhcd1a3ivi2"]
 
 [ext_resource type="Texture2D" uid="uid://dofvu0a7licc7" path="res://player/img/niña.png" id="1_j6h2l"]
 [ext_resource type="Script" path="res://player/jugadora.gd" id="1_qyfu7"]
 [ext_resource type="PackedScene" uid="uid://d36txwwd8ykjl" path="res://contador_gorras/Contador.tscn" id="3_xe003"]
 [ext_resource type="PackedScene" uid="uid://ch3oe2dsyyf78" path="res://contador_vidas/Contador_vidas.tscn" id="4_s8b40"]
 [ext_resource type="AudioStream" uid="uid://w4de14xctx2k" path="res://game_over/music/game-over-31-179699.mp3" id="5_7kpgr"]
+[ext_resource type="AudioStream" uid="uid://bigki3m1n225v" path="res://ene_din/sound/sonido_ataque.mp3" id="6_jeqii"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bp2kw"]
 radius = 33.5
@@ -171,7 +172,7 @@ animations = [{
 }]
 
 [node name="Jugadora" type="CharacterBody2D"]
-position = Vector2(224, -32)
+position = Vector2(32, -32)
 script = ExtResource("1_qyfu7")
 metadata/_edit_group_ = true
 
@@ -218,3 +219,6 @@ one_shot = true
 
 [node name="audio_die" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_7kpgr")
+
+[node name="audio_golpe" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_jeqii")

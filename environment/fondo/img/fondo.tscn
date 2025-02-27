@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b8eui8o2w81e3"]
 
-[ext_resource type="Texture2D" uid="uid://bsdw1lffn0au3" path="res://environment/fondo/img/fondo.jpg" id="1_yqy0g"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hogu2"]
 
 [node name="fondo" type="ParallaxBackground"]
 
@@ -9,7 +9,7 @@
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer"]
 position = Vector2(32, -352)
 scale = Vector2(0.698976, 0.480546)
-texture = ExtResource("1_yqy0g")
+texture = SubResource("CompressedTexture2D_hogu2")
 centered = false
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
